@@ -1,0 +1,37 @@
+# Node modules
+node_modules/
+
+# Environment files (VERY IMPORTANT)
+.env
+.env.local
+.env.development
+.env.production
+
+# Build output
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
+
+# TypeScript
+*.tsbuildinfo
+
+# Vite cache
+.vite/
+
+# Zip / backup files
+*.zip
+
+# Optional: package lock if you don't want to track it
+# package-lock.json
