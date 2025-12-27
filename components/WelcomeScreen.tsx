@@ -203,7 +203,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   {[
     ['Curriculum-Aligned Questions', 'Grade-appropriate, I.N.S.I.G.H.T.-based assessment'],
     ['10-Minute Smart Sprint', 'Test speed, accuracy, focus, and presence of mind'],
-    ['Recognition & Highlights', 'Certificate of Participation, Fastest Finger First Round , Hot Seat with final round Experience , Prizes Worth Up to ₹25,000, A Truly Exclusive KBC-Style Knowledge Experience.'],
+    ['Recognition & Highlights', 'Certificate of Participation, Fastest Finger First Round , Hot Seat with final round Experience , Prizes Worth Up to ₹25,000, A Truly Exclusive KBC-Style Stage Experience.'],
   ].map(([title, desc], i) => (
     <motion.div
       key={i}
