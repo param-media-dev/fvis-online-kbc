@@ -89,7 +89,7 @@ const handleQuizComplete = async (result: {
               onClick={() => setStep(isAdminAuth ? 'admin' : 'admin-login')}
               className="text-sm font-semibold text-slate-500 hover:text-blue-600"
             >
-              Admin
+               
             </button>
 
             {isAdminAuth && (
