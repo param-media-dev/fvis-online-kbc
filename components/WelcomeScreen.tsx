@@ -124,7 +124,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
   </motion.p>
 
 <motion.img
-  src="/kbc-logo.jpeg"
+  src="/var/www/html/fvis-online-kbc"
   alt="FVIS KBC Logo"
   className="w-40 md:w-48 mb-6 object-contain"
   initial={{ scale: 0.6, opacity: 0 }}
