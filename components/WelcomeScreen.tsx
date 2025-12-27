@@ -57,48 +57,38 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (!name.trim() || mobile.length !== 10 || !dob) {
-      setError('Please fill all details correctly');
-      return;
-    }
+  if (!name.trim() || mobile.length !== 10 || !dob || !grade) {
+    setError('Please fill all details correctly');
+    return;
+  }
 
-    const age = getAgeFromDob(dob);
-    const autoGrade = getGradeFromAge(age);
+  try {
+    setSubmitting(true);
+    setError(null);
 
-    if (!autoGrade) {
-      setError('Dear Candidate, please update your date of birth to participate.');
-      return;
-    }
+    const res = await saveStudent({
+      name,
+      mobile,
+      dob,
+      grade, // ✅ manual grade
+    });
 
-    setGrade(autoGrade);
-
-    try {
-      setSubmitting(true);
-      setError(null);
-
-      const res = await saveStudent({
-        name,
-        mobile,
-        dob,
-        grade: autoGrade,
-      });
-
-      onStart({
-        name,
-        mobile,
-        dob,
-        grade: autoGrade,
-        studentId: res.student_id,
-      });
-    } catch (err) {
-      setError('Failed to save student. Please try again.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    onStart({
+      name,
+      mobile,
+      dob,
+      grade, // ✅ manual grade
+      studentId: res.student_id,
+    });
+  } catch (err) {
+    setError('Failed to save student. Please try again.');
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   return (
     <>
