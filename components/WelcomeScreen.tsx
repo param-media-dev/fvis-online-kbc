@@ -221,22 +221,36 @@ const handleSubmit = async (e: React.FormEvent) => {
   ))}
 </motion.div>
 
+{/* ===== INSIGHT HEADING ===== */}
 <motion.h3
-  animate={{ opacity: [0.7, 1, 0.7] }}
-  transition={{ duration: 2.5, ease: 'easeInOut', repeat: Infinity }}
-  className="text-slate-700 font-bold mb-3 tracking-wide"
+  animate={{ opacity: [0.85, 1, 0.85] }}
+  transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity }}
+  className="relative inline-block text-slate-800 font-extrabold mb-6 tracking-wider"
 >
-  SYLLABUS FRAMEWORK – I.N.S.I.G.H.T.
+  {/* Glow background */}
+  <span className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 blur-md opacity-70" />
+  SYLLABUS FRAMEWORK –{' '}
+  <span className="text-indigo-700">I.N.S.I.G.H.T.</span>
 </motion.h3>
 
+{/* ===== INSIGHT LIST ===== */}
 <motion.div
   initial="hidden"
   animate="visible"
   variants={{
-    visible: { transition: { staggerChildren: 0.12 } },
+    visible: { transition: { staggerChildren: 0.15 } },
   }}
-  className="text-sm text-slate-600 text-left space-y-1 max-w-md mb-8"
+  className="relative text-sm text-slate-700 text-left space-y-3 max-w-md mb-8 p-6 rounded-2xl
+             bg-gradient-to-br from-white via-slate-50 to-slate-100
+             border border-slate-200 shadow-sm"
 >
+  {/* Animated border glow */}
+  <motion.div
+    animate={{ opacity: [0.4, 0.8, 0.4] }}
+    transition={{ duration: 4, repeat: Infinity }}
+    className="absolute inset-0 rounded-2xl ring-1 ring-indigo-200"
+  />
+
   {[
     { letter: 'I', text: 'Indian Ancient History & Heritage' },
     { letter: 'N', text: 'Numerical Aptitude & Mathematics' },
@@ -249,11 +263,22 @@ const handleSubmit = async (e: React.FormEvent) => {
     <motion.p
       key={i}
       variants={{
-        hidden: { opacity: 0, x: -20 },
+        hidden: { opacity: 0, x: -30 },
         visible: { opacity: 1, x: 0 },
       }}
+      whileHover={{ x: 6 }}
+      className="relative flex items-start gap-3"
     >
-      <strong>{item.letter}</strong> – {item.text}
+      {/* Letter badge */}
+      <span className="flex items-center justify-center w-8 h-8 rounded-full
+                       bg-indigo-600 text-white font-bold text-xs shadow-md">
+        {item.letter}
+      </span>
+
+      {/* Text */}
+      <span className="leading-relaxed">
+        {item.text}
+      </span>
     </motion.p>
   ))}
 </motion.div>
