@@ -3,14 +3,22 @@ const API = 'https://fvacentre.param.club';
 /* =========================
    TYPES
 ========================= */
+
+export type Lang = 'en' | 'hi';
+
+export interface BilingualText {
+  en: string;
+  hi: string;
+}
+
 export interface QuestionResponse {
   id: number;
-  question: string;
+  question: BilingualText;
   options: {
-    A: string;
-    B: string;
-    C: string;
-    D: string;
+    A: BilingualText;
+    B: BilingualText;
+    C: BilingualText;
+    D: BilingualText;
   };
 }
 
@@ -22,6 +30,7 @@ export interface StudentResponse {
 /* =========================
    FETCH QUESTIONS (GET)
 ========================= */
+
 export const fetchQuestions = async (
   grade: string
 ): Promise<QuestionResponse[]> => {
@@ -39,6 +48,7 @@ export const fetchQuestions = async (
 /* =========================
    VALIDATE ANSWER (POST)
 ========================= */
+
 export const validateAnswer = async (
   questionId: number,
   answer: 'A' | 'B' | 'C' | 'D'
@@ -59,6 +69,7 @@ export const validateAnswer = async (
 /* =========================
    SAVE STUDENT (POST)
 ========================= */
+
 export const saveStudent = async (student: {
   name: string;
   mobile: string;
@@ -77,10 +88,10 @@ export const saveStudent = async (student: {
 
   return res.json();
 };
-/* =========================
-   resuat (POST)
-========================= */
 
+/* =========================
+   SAVE RESULT (POST)
+========================= */
 
 export const saveResult = async (data: {
   student_id: number;

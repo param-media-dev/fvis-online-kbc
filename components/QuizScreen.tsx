@@ -17,7 +17,7 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ grade, onComplete }) => 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
-  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
+  const [timeLeft, setTimeLeft] = useState(600);
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [validated, setValidated] = useState<boolean[]>([]);
@@ -28,8 +28,10 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ grade, onComplete }) => 
       .then((data) => {
         const formatted: Question[] = data.map((q: any) => ({
           id: q.id,
-          question: q.question,
-          options: Object.values(q.options),
+          question: q.question, // { en, hi }
+          options: ['A', 'B', 'C', 'D'].map(
+            (key) => q.options[key] // { en, hi }
+          ),
         }));
 
         setQuestions(formatted);
@@ -65,9 +67,9 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ grade, onComplete }) => 
     return () => clearInterval(timer);
   }, [answers, score, loading, onComplete, questions.length]);
 
-  /* ================= ANSWER SELECTION + VALIDATION ================= */
+  /* ================= ANSWER SELECTION ================= */
   const handleSelectOption = async (optionIndex: number) => {
-    if (validated[currentIndex]) return; // prevent re-validation
+    if (validated[currentIndex]) return;
 
     const newAnswers = [...answers];
     newAnswers[currentIndex] = optionIndex;
@@ -151,7 +153,7 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ grade, onComplete }) => 
         </div>
 
         <div
-          className={`px-4 py-2 rounded-full font-mono text-lg font-bold flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-full font-mono text-lg font-bold ${
             timeLeft < 60
               ? 'bg-red-100 text-red-600 animate-pulse'
               : 'bg-blue-100 text-blue-600'
@@ -171,9 +173,13 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ grade, onComplete }) => 
 
       {/* Question */}
       <div className="p-8 flex-1 flex flex-col">
-        <h2 className="text-xl md:text-2xl font-semibold text-slate-800 mb-8">
-          {currentQuestion.question}
+        <h2 className="text-xl md:text-2xl font-semibold text-slate-800 mb-2">
+          {currentQuestion.question.en}
         </h2>
+
+        <p className="text-lg text-slate-500 mb-8">
+          ({currentQuestion.question.hi})
+        </p>
 
         <div className="space-y-3 flex-1">
           {currentQuestion.options.map((option, idx) => (
@@ -181,7 +187,7 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ grade, onComplete }) => 
               key={idx}
               onClick={() => handleSelectOption(idx)}
               disabled={validated[currentIndex]}
-              className={`w-full text-left p-4 rounded-2xl border-2 transition-all flex items-center gap-4 ${
+              className={`w-full text-left p-4 rounded-2xl border-2 transition-all flex items-start gap-4 ${
                 answers[currentIndex] === idx
                   ? 'bg-blue-50 border-blue-500'
                   : 'bg-white border-slate-100 hover:border-blue-300'
@@ -190,7 +196,15 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ grade, onComplete }) => 
               <div className="w-8 h-8 flex items-center justify-center rounded-lg font-bold text-sm bg-slate-100">
                 {OPTION_LETTERS[idx]}
               </div>
-              <span className="text-lg text-slate-700">{option}</span>
+
+              <div className="flex flex-col">
+                <span className="text-lg text-slate-700">
+                  {option.en}
+                </span>
+                <span className="text-sm text-slate-500">
+                  ({option.hi})
+                </span>
+              </div>
             </button>
           ))}
         </div>
@@ -211,7 +225,9 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ grade, onComplete }) => 
           disabled={answers[currentIndex] === -1}
           className="px-8 py-3 rounded-xl font-semibold bg-blue-600 text-white"
         >
-          {currentIndex === questions.length - 1 ? 'Finish Quiz' : 'Next Question'}
+          {currentIndex === questions.length - 1
+            ? 'Finish Quiz'
+            : 'Next Question'}
         </button>
       </div>
     </div>
