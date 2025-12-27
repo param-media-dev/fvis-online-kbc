@@ -482,6 +482,34 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
       </div>
     ))}
   </div>
+  {/* ================= QUERY INFO (PROFESSIONAL STYLE) ================= */}
+<div className="mt-14">
+  <div className="bg-white border border-slate-200 rounded-2xl px-8 py-6 shadow-sm text-center">
+
+    <p className="text-slate-700 text-sm sm:text-base font-medium leading-relaxed">
+      For any queries related to the
+      <span className="mx-1 font-semibold text-slate-900">
+        KBC Quiz
+      </span>
+      , feel free to call or WhatsApp us at the numbers below.
+    </p>
+
+    <div className="mt-5 flex flex-col sm:flex-row justify-center gap-4">
+      <span className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 font-semibold text-base">
+        📞 7567663000
+      </span>
+
+      <span className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 font-semibold text-base">
+        📞 7698663000
+      </span>
+    </div>
+
+    <p className="mt-4 text-slate-500 text-sm">
+      We’ll be happy to assist you.
+    </p>
+  </div>
+</div>
+
 </section>
 
       </div>
