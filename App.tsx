@@ -81,7 +81,7 @@ const handleQuizComplete = async (result: {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-slate-200 z-50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="cursor-pointer" onClick={resetQuiz}>
-            <img src="/var/www/html/logo.png" alt="Logo" className="h-10" />
+            <img src="/logo.png" alt="Logo" className="h-10" />
           </div>
 
           <div className="flex items-center gap-4">

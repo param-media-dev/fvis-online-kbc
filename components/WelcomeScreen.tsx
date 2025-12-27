@@ -124,7 +124,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
   </motion.p>
 
 <motion.img
-  src="/var/www/html/fvis-online-kbc"
+  src="/kbc-logo.jpeg"
   alt="FVIS KBC Logo"
   className="w-40 md:w-48 mb-6 object-contain"
   initial={{ scale: 0.6, opacity: 0 }}
@@ -362,7 +362,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
       {/* Auto Grade */}
       <div>
         <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
-          Auto-Assigned Grade Param
+          Auto-Assigned Grade
         </label>
         <input
           type="text"
