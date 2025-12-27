@@ -240,7 +240,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   {[
     { letter: 'I', text: 'Indian Ancient History & Heritage' },
     { letter: 'N', text: 'Numerical Aptitude & Mathematics' },
-    { letter: 'S', text: 'Science, Sustainability & Environment' },
+    { letter: 'S', text: 'Science, Sports & Environment' },
     { letter: 'I', text: 'Information Technology, Computer & AI' },
     { letter: 'G', text: 'General Knowledge & Current Affairs' },
     { letter: 'H', text: 'Human Languages (English • Hindi • Sanskrit • Gujarati)' },
