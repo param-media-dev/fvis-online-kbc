@@ -288,8 +288,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
 <div className="md:w-1/2 bg-white p-12 flex flex-col justify-center">
   <div className="max-w-md mx-auto w-full">
 
-    <form onSubmit={handleSubmit} className="space-y-6">
+    {/* Title */}
+    <h2 className="text-3xl font-extrabold text-slate-800 mb-8">
+      Ready to Play
+    </h2>
 
+    <form onSubmit={handleSubmit} className="space-y-6">
+    
       {/* Name */}
       <div>
         <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
@@ -357,7 +362,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
       {/* Auto Grade */}
       <div>
         <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
-          Auto-Assigned Grade
+          Auto-Assigned Grade Param
         </label>
         <input
           type="text"
