@@ -1,0 +1,9 @@
+{
+  "useCustomTemplate": true,
+  "templateImage": "/certificate.jpg",
+  "nameFontFamily": "EB Garamond",
+  "nameFontSize": 72,
+  "nameColor": "#000000",
+  "nameXPos": 50,
+  "nameYPos": 60
+}

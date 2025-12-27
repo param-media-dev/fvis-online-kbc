@@ -16,7 +16,9 @@ export interface UserProfile {
   name: string;
   mobile: string;
   dob: string;
-  grade: GradeLevel;
+  grade: string;
+  studentId?: number;
+  
 }
 
 

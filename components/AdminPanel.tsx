@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { GradeLevel, Question, CertificateConfig, CertFont } from '../types';
 import { getLocalQuestions, saveLocalQuestions, getCertConfig, saveCertConfig } from '../storeService';
@@ -30,10 +29,19 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, onLogout }) => {
   const [options, setOptions] = useState(['', '', '', '']);
   const [correctIdx, setCorrectIdx] = useState(0);
 
-  // Certificate Form State
-  const [certConfig, setCertConfig] = useState<CertificateConfig>(getCertConfig());
+  // Certificate Form State (async-loaded)
+  const [certConfig, setCertConfig] = useState<CertificateConfig | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Load certificate config from backend/json file
+  useEffect(() => {
+    (async () => {
+      const cfg = await getCertConfig();
+      setCertConfig(cfg);
+    })();
+  }, []);
+
+  // Load questions by grade
   useEffect(() => {
     setQuestions(getLocalQuestions(selectedGrade));
   }, [selectedGrade]);
@@ -43,9 +51,15 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, onLogout }) => {
       alert("Please fill all fields");
       return;
     }
+
     let updated: Question[];
+
     if (editingId) {
-      updated = questions.map(q => q.id === editingId ? { ...q, question: qText, options, correctAnswerIndex: correctIdx } : q);
+      updated = questions.map(q =>
+        q.id === editingId
+          ? { ...q, question: qText, options, correctAnswerIndex: correctIdx }
+          : q
+      );
     } else {
       const newQ: Question = {
         id: Date.now().toString(),
@@ -55,6 +69,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, onLogout }) => {
       };
       updated = [...questions, newQ];
     }
+
     setQuestions(updated);
     saveLocalQuestions(selectedGrade, updated);
     resetQuestionForm();
@@ -86,10 +101,16 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, onLogout }) => {
 
   const generateWithAI = async () => {
     if (questions.length > 0 && !confirm("This will overwrite existing questions for this grade. Continue?")) return;
+
     setIsGenerating(true);
+
     try {
       const fetched = await fetchQuestions(selectedGrade);
-      const mapped = fetched.map(q => ({ ...q, id: Math.random().toString(36).substr(2, 9) }));
+      const mapped = fetched.map(q => ({
+        ...q,
+        id: Math.random().toString(36).substr(2, 9)
+      }));
+
       setQuestions(mapped);
       saveLocalQuestions(selectedGrade, mapped);
     } catch (err) {
@@ -99,23 +120,34 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, onLogout }) => {
     }
   };
 
-  const handleSaveCertificate = () => {
-    saveCertConfig(certConfig);
+  // SAVE CERTIFICATE CONFIG (async)
+  const handleSaveCertificate = async () => {
+    if (!certConfig) return;
+    await saveCertConfig(certConfig);
     alert("Certificate settings saved!");
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!certConfig) return;
+
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
+
       reader.onloadend = () => {
-        setCertConfig({ ...certConfig, templateImage: reader.result as string, useCustomTemplate: true });
+        setCertConfig({
+          ...certConfig,
+          templateImage: reader.result as string,
+          useCustomTemplate: true
+        });
       };
+
       reader.readAsDataURL(file);
     }
   };
 
   const getPreviewFontStyle = () => {
+    if (!certConfig) return '';
     switch (certConfig.nameFontFamily) {
       case 'EB Garamond': return 'font-formal';
       case 'Dancing Script': return 'font-script';
@@ -123,6 +155,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack, onLogout }) => {
       default: return 'font-certificate';
     }
   };
+
+  // Show loading until config arrives
+  if (!certConfig) {
+    return (
+      <div className="p-8 text-center text-slate-600">
+        Loading certificate designer…
+      </div>
+    );
+  }
+
+  // ---------------- REAL JSX CONTENT (unchanged from yours) ----------------
 
   return (
     <div className="flex flex-col md:flex-row flex-1 min-h-[600px] bg-slate-50">

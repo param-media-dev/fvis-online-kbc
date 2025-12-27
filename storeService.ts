@@ -49,11 +49,15 @@ export const getAllLocalQuestions = (): LocalQuizData => {
   return data ? JSON.parse(data) : { ...DEFAULT_QUESTIONS };
 };
 
-export const getCertConfig = (): CertificateConfig => {
-  const data = localStorage.getItem(CERT_KEY);
-  return data ? JSON.parse(data) : DEFAULT_CERT_CONFIG;
+export const getCertConfig = async (): Promise<CertificateConfig> => {
+  const res = await fetch("/api/get-cert-config");
+  return await res.json();
 };
 
-export const saveCertConfig = (config: CertificateConfig) => {
-  localStorage.setItem(CERT_KEY, JSON.stringify(config));
+export const saveCertConfig = async (config: CertificateConfig) => {
+  await fetch("/api/save-cert-config", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(config),
+  });
 };
