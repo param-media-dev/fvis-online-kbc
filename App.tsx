@@ -8,7 +8,6 @@ import { UserProfile, CertificateConfig } from './types';
 import { getCertConfig } from './storeService';
 import { saveResult } from './services/api';
 
-
 const App: React.FC = () => {
   const [step, setStep] = useState<
     'welcome' | 'quiz' | 'result' | 'admin-login' | 'admin'
@@ -22,9 +21,7 @@ const App: React.FC = () => {
     total: number;
   } | null>(null);
 
-  const [certConfig, setCertConfig] = useState<CertificateConfig>(
-    getCertConfig()
-  );
+  const [certConfig] = useState<CertificateConfig>(getCertConfig());
 
   /* ================= START QUIZ ================= */
   const startQuiz = (userProfile: UserProfile) => {
@@ -34,29 +31,28 @@ const App: React.FC = () => {
   };
 
   /* ================= COMPLETE QUIZ ================= */
-const handleQuizComplete = async (result: {
-  answers: number[];
-  score: number;
-  total: number;
-}) => {
-  setQuizResult(result);
+  const handleQuizComplete = async (result: {
+    answers: number[];
+    score: number;
+    total: number;
+  }) => {
+    setQuizResult(result);
 
-  // 🔹 SAVE RESULT TO BACKEND
-  try {
-    if (profile?.studentId) {
-      await saveResult({
-        student_id: profile.studentId,
-        score: result.score,
-        total: result.total,
-        grade: profile.grade,
-      });
+    try {
+      if (profile?.studentId) {
+        await saveResult({
+          student_id: profile.studentId,
+          score: result.score,
+          total: result.total,
+          grade: profile.grade,
+        });
+      }
+    } catch (err) {
+      console.error('Failed to save quiz result', err);
     }
-  } catch (err) {
-    console.error('Failed to save quiz result', err);
-  }
 
-  setStep('result');
-};
+    setStep('result');
+  };
 
   /* ================= ADMIN ================= */
   const handleAdminAuth = () => {
@@ -77,17 +73,34 @@ const handleQuizComplete = async (result: {
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center font-sans antialiased text-slate-900">
-      {/* HEADER */}
+      
+      {/* ================= HEADER ================= */}
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-slate-200 z-50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          
+          {/* Logo */}
           <div className="cursor-pointer" onClick={resetQuiz}>
             <img src="/logo.png" alt="Logo" className="h-10" />
           </div>
 
+          {/* Right Section */}
           <div className="flex items-center gap-4">
+
+            {/* Support Info (Desktop Only) */}
+            <div className="hidden sm:flex items-center gap-2 text-xs text-slate-500">
+              <span className="text-slate-400">KBC Quiz Support:</span>
+              <span className="px-2 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-700 font-semibold">
+                7567663000
+              </span>
+              <span className="px-2 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-700 font-semibold">
+                7698663000
+              </span>
+            </div>
+
+            {/* Admin Button */}
             <button
               onClick={() => setStep(isAdminAuth ? 'admin' : 'admin-login')}
-              className="text-sm font-semibold text-slate-500 hover:text-blue-600"
+              className="text-sm font-semibold text-slate-500 hover:text-slate-900"
             >
                
             </button>
@@ -104,9 +117,10 @@ const handleQuizComplete = async (result: {
         </div>
       </header>
 
-      {/* MAIN */}
+      {/* ================= MAIN ================= */}
       <main className="w-full max-w-5xl mt-20 mb-10 px-4">
         <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden min-h-[600px] flex flex-col">
+          
           {step === 'welcome' && (
             <WelcomeScreen
               onStart={startQuiz}
@@ -145,12 +159,15 @@ const handleQuizComplete = async (result: {
               certConfig={certConfig}
             />
           )}
+
         </div>
       </main>
 
+      {/* ================= FOOTER ================= */}
       <footer className="w-full text-center py-8 text-slate-400 text-sm">
         <p>Product By Param Media</p>
       </footer>
+
     </div>
   );
 };
