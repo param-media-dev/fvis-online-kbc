@@ -328,56 +328,55 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
         />
       </div>
 
-      {/* DOB */}
-      <div>
-        <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
-          Date of Birth
-        </label>
-        <input
-          type="date"
-          required
-          value={dob}
-          max={new Date().toISOString().split('T')[0]}
-          onChange={(e) => {
-            const value = e.target.value;
-            setDob(value);
+    {/* DOB */}
+    <div>
+      <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
+        Date of Birth
+      </label>
+      <input
+        type="date"
+        required
+        value={dob || ''}
+        max={new Date().toISOString().split('T')[0]}
+        onChange={(e) => {
+          setDob(e.target.value);
+          setError(null);
+        }}
+        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200"
+      />
+    </div>
 
-            const age = getAgeFromDob(value);
-            const autoGrade = getGradeFromAge(age);
+  {/* Manual Grade Selection */}
+  <div>
+    <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
+      Select Grade
+    </label>
 
-            if (!age || age < 6 || age > 14) {
-              setError('Dear Candidate, please update your date of birth to participate.');
-              setGrade('Class 1-2');
-              return;
+    <div className="grid grid-cols-2 gap-3">
+      {[
+        'Class 1-2',
+        'Class 3-4',
+        'Class 5-6',
+        'Class 7-8',
+        'Class 9',
+      ].map((item) => (
+        <button
+          key={item}
+          type="button"
+          onClick={() => setGrade(item)}
+          className={`px-4 py-3 rounded-xl border font-semibold transition
+            ${
+              grade === item
+                ? 'bg-indigo-600 text-white border-indigo-600'
+                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
             }
-
-            setError(null);
-
-            if (autoGrade) setGrade(autoGrade);
-          }}
-          className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200"
-        />
-      </div>
-
-      {/* Auto Grade */}
-      <div>
-        <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
-          Auto-Assigned Grade
-        </label>
-        <input
-          type="text"
-          value={grade}
-          disabled
-          className="w-full px-6 py-4 rounded-2xl bg-slate-100 border border-slate-200 font-bold"
-        />
-      </div>
-
-      {(error || initialError) && (
-        <div className="p-4 bg-red-50 text-red-600 rounded-xl">
-          {error || initialError}
-        </div>
-      )}
-
+          `}
+        >
+          {item}
+        </button>
+      ))}
+    </div>
+  </div>
       <button
         disabled={submitting}
         className={`
