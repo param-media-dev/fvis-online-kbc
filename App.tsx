@@ -163,20 +163,20 @@ const App: React.FC = () => {
         </div>
       </main>
 {/* ================= FOOTER ================= */}
-<footer className="w-full text-center py-8 text-slate-400 text-sm">
+<footer>
   <a
     href="https://in.linkedin.com/in/param-parmar"
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-block"
   >
     <img
       src="/param-media-logo.png"
       alt="Param Media"
-      className="h-16 mx-auto"
+      style={{ height: "140px", display: "block", margin: "0 auto" }}
     />
   </a>
 </footer>
+
 
 
     </div>
