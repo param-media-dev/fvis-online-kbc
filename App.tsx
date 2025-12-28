@@ -173,10 +173,11 @@ const App: React.FC = () => {
     <img
       src="/param-media-logo.png"
       alt="Param Media"
-      className="h-10 mx-auto"
+      className="h-16 mx-auto"
     />
   </a>
 </footer>
+
 
     </div>
   );
