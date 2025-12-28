@@ -226,7 +226,7 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ grade, onComplete }) => 
           className="px-8 py-3 rounded-xl font-semibold bg-blue-600 text-white"
         >
           {currentIndex === questions.length - 1
-            ? 'Finish Quiz'
+            ? 'Submit'
             : 'Next Question'}
         </button>
       </div>
