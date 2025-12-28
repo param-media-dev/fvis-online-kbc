@@ -162,11 +162,21 @@ const App: React.FC = () => {
 
         </div>
       </main>
-
-      {/* ================= FOOTER ================= */}
-      <footer className="w-full text-center py-8 text-slate-400 text-sm">
-        <p>Product By Param Media</p>
-      </footer>
+{/* ================= FOOTER ================= */}
+<footer className="w-full text-center py-8 text-slate-400 text-sm">
+  <a
+    href="https://in.linkedin.com/in/param-parmar"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block"
+  >
+    <img
+      src="/param-media-logo.png"
+      alt="Param Media"
+      className="h-10 mx-auto"
+    />
+  </a>
+</footer>
 
     </div>
   );
