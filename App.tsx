@@ -171,17 +171,18 @@ const App: React.FC = () => {
     target="_blank"
     rel="noopener noreferrer"
   >
-  <motion.img
-    src="/param-media-logo.png"
-    alt="Param Media"
-    style={{ height: "140px", display: "block", margin: "0 auto" }}
-    animate={{ y: [0, -8, 0], boxShadow: ["0px 0px 0px rgba(0,0,0,0.2)", "0px 0px 20px rgba(0,0,0,0.25)", "0px 0px 0px rgba(0,0,0,0.2)"] }}
-    transition={{
-      duration: 3,
-      repeat: Infinity,
-      ease: "easeInOut"
-    }}
-  />
+<motion.img
+  src="/param-media-logo.png"
+  alt="Param Media"
+  style={{ height: "140px", display: "block", margin: "0 auto" }}
+  animate={{ rotate: [-3, 3, -3] }}
+  transition={{
+    duration: 4,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }}
+/>
+
   </a>
 </footer>
 
