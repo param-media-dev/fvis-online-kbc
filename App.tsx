@@ -7,6 +7,8 @@ import { AdminLogin } from './components/AdminLogin';
 import { UserProfile, CertificateConfig } from './types';
 import { getCertConfig } from './storeService';
 import { saveResult } from './services/api';
+import { motion } from "framer-motion";
+
 
 const App: React.FC = () => {
   const [step, setStep] = useState<
@@ -169,14 +171,19 @@ const App: React.FC = () => {
     target="_blank"
     rel="noopener noreferrer"
   >
-    <img
+    <motion.img
       src="/param-media-logo.png"
       alt="Param Media"
       style={{ height: "140px", display: "block", margin: "0 auto" }}
+      animate={{ scale: [1, 1.15, 1] }}
+      transition={{
+        duration: 2.5,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
     />
   </a>
 </footer>
-
 
 
     </div>
